@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "build": "",
+    "build": "npm ci",
     "start": "node index.js"
   },
   "repository": {
