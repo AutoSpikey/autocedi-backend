@@ -1,0 +1,25 @@
+{
+  "name": "autocedi-backend",
+  "version": "0.0.0",
+  "description": "backend for the Spikey's autocedi project",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/AutoSpikey/autocedi-backend"
+  },
+  "keywords": [
+    "eCedi",
+    "hackathon",
+    "express",
+    "javascript",
+    "nodejs"
+  ],
+  "author": "SpikeyTeam",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
