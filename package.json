@@ -4,7 +4,9 @@
   "description": "backend for the Spikey's autocedi project",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build": "",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
