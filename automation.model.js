@@ -31,7 +31,7 @@ const automationSchema = new Schema({
                 required: true,
             },
             value: {
-                type: Number,
+                type: [Number, String],
                 required: true,
             },
         },
