@@ -25,6 +25,8 @@ app.get('/', (req, res) => {
 app.use('/automations', automationRoutes);
 app.use('/callback', callbackRoutes);
 
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.p5etw.mongodb.net/your_database?retryWrites=true&w=majority`)
+
 module.exports = app;
 
 
