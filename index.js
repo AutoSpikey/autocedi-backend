@@ -2,6 +2,8 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose');
 const automationRoutes = require('./automation.routes');
+const callbackRoutes = require('./callback.routes');
+
 const audit = require("express-requests-logger")
 const cors = require('cors')
 
@@ -23,6 +25,8 @@ app.get('/', (req, res) => {
 
 // Use the automation routes
 app.use('/automations', automationRoutes);
+app.use('/callback', callbackRoutes);
+
 
 // Connect to MongoDB
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.p5etw.mongodb.net/your_database?retryWrites=true&w=majority`)
