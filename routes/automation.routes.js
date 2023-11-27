@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Automation = require('./automation.model');
+const Automation = require('../models/automation.model');
+const { connect } = require('mongoose');
+
+router.use(await connect());
 
 // Create
 router.post('/', async (req, res) => {
@@ -34,14 +37,6 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update
-router.put('/:id', async (req, res) => {
-    try {
-        const automation = await Automation.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.json(automation);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
 // Delete
 router.delete('/:id', async (req, res) => {
