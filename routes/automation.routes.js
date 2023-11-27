@@ -1,14 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Automation = require('../models/automation.model');
-const { connect } = require('mongoose');
-
-router.use(await connect());
 
 // Create
 router.post('/', async (req, res) => {
     try {
-        console.log(req.body)
         const automation = await Automation.create(req.body);
         res.json(automation);
     } catch (error) {

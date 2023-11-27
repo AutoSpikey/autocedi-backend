@@ -1,7 +1,12 @@
 require('dotenv').config()
-const express = require('express')
-const automationRoutes = require('./automation.routes');
-const callbackRoutes = require('./callback.routes');
+
+const express = require('express');
+
+const automationRoutes = require('./routes/automation.routes');
+const callbackRoutes = require('./routes/callback.routes');
+const loginRoutes = require('./routes/login.routes');
+const registerRoutes = require('./routes/register.routes');
+const walletRoutes = require('./routes/wallet.routes');
 
 const audit = require("express-requests-logger")
 const cors = require('cors')
@@ -23,9 +28,12 @@ app.get('/', (req, res) => {
 
 // Use the automation routes
 app.use('/automations', automationRoutes);
+app.use('/wallets', walletRoutes);
 app.use('/callback', callbackRoutes);
+app.use('/login', loginRoutes);
+app.use('/register', registerRoutes);
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.p5etw.mongodb.net/your_database?retryWrites=true&w=majority`)
+
 
 module.exports = app;
 
