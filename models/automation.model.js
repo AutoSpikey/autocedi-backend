@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const automationSchema = new Schema({
+    label: String,
     trigger: {
         type: {
             type: String,
