@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 
 router.post('/', async (req, res) => {
-
     try {
         const user = await User.findOne({ email: req.body.email });
 
@@ -20,9 +19,9 @@ router.post('/', async (req, res) => {
         // If passwords match, generate a JWT token
         if (passwordMatch) {
             const token = jwt.sign(
-                { userId: user._id, email: user.email, wallet: user.wallet },
+                { userId: user._id, email: user.email, wallet: user.wallet, ip: req.socket.remoteAddress },
                 process.env.JWT_SECRET_KEY,
-                { expiresIn: '15m' } // Token expires in 15 minutes
+                { expiresIn: '5m' } // Token expires in 5 minutes
             );
 
             // Send the token in the response
