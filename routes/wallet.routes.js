@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
     try {
         const wallets = await Wallet.find();
 
-        res.status(200).send({ wallets });
+        res.status(200).send(wallets);
     } catch (err) {
         res.status(500).send({ error: err.message });
     }
@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
             return;
         }
 
-        res.status(200).send({ wallet });
+        res.status(200).send(wallet);
     } catch (err) {
         res.status(500).send({ error: err.message });
     }
@@ -46,7 +46,7 @@ router.put('/:id', async (req, res) => {
             return;
         }
 
-        res.status(200).send({ wallet });
+        res.status(200).send(wallet);
     } catch (err) {
         res.status(500).send({ error: err.message });
     }
