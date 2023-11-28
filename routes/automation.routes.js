@@ -35,13 +35,16 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Update
-
 // Delete
 router.delete('/:id', async (req, res) => {
     try {
         const automation = await Automation.findByIdAndDelete(req.params.id);
-        res.json(automation);
+
+        if (!automation) {
+            res.status(404).send({ message: 'Automation not found' });
+            return;
+        }
+        res.status(200).send({ message: 'Automation deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
