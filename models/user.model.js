@@ -9,6 +9,7 @@ const userSchema = new Schema({
     password: String,
     phone: String,
     automations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Automation' }],
+    wallet: { type: mongoose.Schema.Types.ObjectId, ref: 'Wallet'},
 });
 
 const User = mongoose.model('Schema', userSchema);
