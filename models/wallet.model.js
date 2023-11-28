@@ -11,6 +11,6 @@ const walletSchema = new Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
-const User = mongoose.model('Schema', walletSchema);
+const Wallet = mongoose.model('Wallet', walletSchema);
 
-module.exports = User;
+module.exports = Wallet;
