@@ -9,7 +9,7 @@ const walletSchema = new Schema({
     owner: String,
     status: String,
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-});
+}, { versionKey: false });
 
 const Wallet = mongoose.model('Wallet', walletSchema);
 

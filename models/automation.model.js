@@ -53,7 +53,7 @@ const automationSchema = new Schema({
             },
         },
     ],
-}, { timestamps: true });
+}, { timestamps: true, versionKey: false });
 
 const Automation = mongoose.model('Automation', automationSchema);
 

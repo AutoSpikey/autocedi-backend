@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-    firstName: String, 
+    firstName: String,
     lastName: String,
     otherNames: String,
     email: String,
     password: String,
     phone: String,
     automations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Automation' }],
-    wallet: { type: mongoose.Schema.Types.ObjectId, ref: 'Wallet'},
-});
+    wallet: { type: mongoose.Schema.Types.ObjectId, ref: 'Wallet' },
+}, { versionKey: false });
 
 const User = mongoose.model('User', userSchema);
 
