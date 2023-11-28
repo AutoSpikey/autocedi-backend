@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const User = require("../models/user.model")
+const User = require("../models/user.model");
+const { obfuscate } = require('../lib/security');
 
 // Create
 router.post('/', async (req, res) => {
@@ -9,7 +10,9 @@ router.post('/', async (req, res) => {
 
     try {
         const user = await User.create(req.body);
-        return res.status(201).json(user);
+        let {password, ...userData} = user
+        userData = obfuscate(userData)
+        return res.status(201).json(userData);
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
