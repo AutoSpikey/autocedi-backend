@@ -4,21 +4,18 @@ const { Schema } = mongoose;
 const automationSchema = new Schema({
     label: String,
     trigger: {
+        field: {
+            type: String,
+            enum: ['time','receive'],
+            required: true,
+        },
         type: {
             type: String,
-            enum: ['time', 'receive'],
             required: true,
         },
         value: {
-            cron: {
-                type: String,
-            },
-            receiveType: {
-                type: String,
-            },
-            receiveValue: {
-                type: Number,
-            },
+            type: [Number, String],
+            required: true,
         },
     },
     conditions: [
