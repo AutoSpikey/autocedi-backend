@@ -26,7 +26,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const automation = await Automation.findById(req.params.id);
-        res.json(automation);
+
+        if(!automation) return res.status(404).json({ message: `automation with id ${id} not found` });
+        
+        return res.json(automation);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
