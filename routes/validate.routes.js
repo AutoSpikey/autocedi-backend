@@ -7,9 +7,10 @@ const { obfuscate } = require('../lib/security');
 router.get('/:phone', async (req, res) => {
     try {
         const phone = req.params.phone;
-        const {password, ...user} = await User.findOne({ phone });
+        const user = await User.findOne({ phone });
         if (user) {
-            return res.json(obfuscate(user))
+            const {password, ...userData} = user.toObject();
+            return res.json(obfuscate(userData))
         } else {
             return res.status(404).json({ message: `no user with phone number ${phone} found` });
         }
