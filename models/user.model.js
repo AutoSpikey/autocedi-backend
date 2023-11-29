@@ -5,9 +5,15 @@ const userSchema = new Schema({
     firstName: String,
     lastName: String,
     otherNames: String,
-    email: String,
+    email: {
+        type: String,
+        unique: true
+    },
     password: String,
-    phone: String,
+    phone: {
+        type: String,
+        unique: true
+    },
     automations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Automation' }],
     wallet: { type: mongoose.Schema.Types.ObjectId, ref: 'Wallet' },
 }, { versionKey: false });

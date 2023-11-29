@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const walletSchema = new Schema({
-    walletId: String,
+    walletId: {
+        type: String,
+        unique: true 
+    },
     userId: String,
     category: String,
     level: String,
