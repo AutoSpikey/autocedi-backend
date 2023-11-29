@@ -9,15 +9,15 @@ const automationSchema = new Schema({
     trigger: {
         field: {
             type: String,
-            enum: ['time','receive'],
             required: true,
         },
         type: {
             type: String,
+            enum: ['time','receive'],
             required: true,
         },
         value: {
-            type: [Number, String],
+            type: String,
             required: true,
         },
     },
@@ -32,7 +32,7 @@ const automationSchema = new Schema({
                 required: true,
             },
             value: {
-                type: [Number, String],
+                type: String,
                 required: true,
             },
         },
@@ -56,6 +56,15 @@ const automationSchema = new Schema({
             },
         },
     ],
+    history:[
+        {
+            startTime: String,
+            finishTime: String,
+            success: Boolean,
+            logs: String
+        }
+    ],
+    lastRan: String
 }, { timestamps: true, versionKey: false });
 
 const Automation = mongoose.model('Automation', automationSchema);

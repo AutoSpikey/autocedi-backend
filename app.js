@@ -7,7 +7,6 @@ const registerRoutes = require('./routes/register.routes');
 const walletRoutes = require('./routes/wallet.routes');
 const validateRoutes = require('./routes/validate.routes');
 
-const audit = require("express-requests-logger")
 const cors = require('cors')
 
 const app = express();

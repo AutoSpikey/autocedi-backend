@@ -1,6 +1,6 @@
 require('dotenv').config()
 const app = require("./app");
-const db = require("./db");
+const db = require("./lib/db");
 const PORT = 3000
 
 // Connect to MongoDB
