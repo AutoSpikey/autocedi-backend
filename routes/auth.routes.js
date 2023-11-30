@@ -5,6 +5,18 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 
 router.post('/', async (req, res) => {
+    req.body.password = await bcrypt.hash(req.body.password, 10);
+
+    try {
+        const user = await User.create(req.body);
+        const userData = obfuscate(user.toObject())
+        return res.status(201).json(userData);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+
+router.post('/', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
 
@@ -19,7 +31,7 @@ router.post('/', async (req, res) => {
         // If passwords match, generate a JWT token
         if (passwordMatch) {
             const token = jwt.sign(
-                { userId: user._id, email: user.email, wallet: user.wallet, ip: req.socket.remoteAddress },
+                { userId: user._id, ip: req.socket.remoteAddress },
                 process.env.JWT_SECRET_KEY,
                 { expiresIn: '5m' } // Token expires in 5 minutes
             );
@@ -37,5 +49,7 @@ router.post('/', async (req, res) => {
         "message": "not implemented yet"
     }, 200)
 });
+
+
 
 module.exports = router;
