@@ -3,20 +3,28 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+const Emtech = require("../lib/emtech");
+const { obfuscate } = require('../lib/security');
+const { generateUniqueId } = require('../lib/generator');
 
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
     req.body.password = await bcrypt.hash(req.body.password, 10);
 
+    let user;
+
     try {
-        const user = await User.create(req.body);
-        const userData = obfuscate(user.toObject())
-        return res.status(201).json(userData);
+        const oid = generateUniqueId();
+        const walletResponse = await Emtech.createWallet(oid)
+        user = await User.create({...req.body, oid, walletId: walletResponse.id })
     } catch (error) {
+        console.error(error.message)
         return res.status(500).json({ error: error.message });
     }
+
+    return res.status(201).json(obfuscate(user.toObject()));
 });
 
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
 

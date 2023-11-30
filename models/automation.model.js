@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const automationSchema = new Schema({
+    oid: {
+        type: String, 
+        unique: true,
+    },
     label: {
         type: String,
         unique: true 
