@@ -10,8 +10,7 @@ router.post('/', async (req, res) => {
 
     try {
         const user = await User.create(req.body);
-        let {password, ...userData} = user.toObject();
-        userData = obfuscate(userData)
+        const userData = obfuscate(user.toObject())
         return res.status(201).json(userData);
     } catch (error) {
         return res.status(500).json({ error: error.message });

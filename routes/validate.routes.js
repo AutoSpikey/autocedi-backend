@@ -9,8 +9,7 @@ router.get('/:phone', async (req, res) => {
         const phone = req.params.phone;
         const user = await User.findOne({ phone });
         if (user) {
-            const {password, ...userData} = user.toObject();
-            return res.json(obfuscate(userData))
+            return res.json(obfuscate(user.toObject()))
         } else {
             return res.status(404).json({ message: `no user with phone number ${phone} found` });
         }
