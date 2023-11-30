@@ -14,12 +14,14 @@ const limiter = rateLimit({
 });
 
 const cors = require("cors");
+const axiosMiddleware = require("./middleware/axios");
 
 const app = express();
 
 app.use(express.json());
 // app.use(audit())
 app.use(function (req, res, next) {
+  console.log(req.body);  
   res.header("Access-Control-Allow-Origin", "localhost"); // update to match the domain you will make the request from
   res.header(
     "Access-Control-Allow-Headers",
