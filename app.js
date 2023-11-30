@@ -7,6 +7,7 @@ const registerRoutes = require("./routes/register.routes");
 const walletRoutes = require("./routes/wallet.routes");
 const validateRoutes = require("./routes/validate.routes");
 const rateLimit = require("express-rate-limit");
+const logger = require("./logger");
 
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
@@ -21,7 +22,7 @@ const app = express();
 app.use(express.json());
 // app.use(audit())
 app.use(function (req, res, next) {
-  console.log(req.body);  
+  logger.info(req.body);
   res.header("Access-Control-Allow-Origin", "localhost"); // update to match the domain you will make the request from
   res.header(
     "Access-Control-Allow-Headers",

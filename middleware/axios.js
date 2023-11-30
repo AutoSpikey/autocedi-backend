@@ -2,7 +2,7 @@ const axios =  require('axios');
 
 axios.interceptors.request.use( (config) => {     
     // do something before request is sent
-    console.log('Middleware triggered before Axios request');
+    logger.info(`Sending Request ... \n ${config}`);
     return config;
 }, function(error){
     return Promise.reject(error);
@@ -10,7 +10,7 @@ axios.interceptors.request.use( (config) => {
 
 axios.interceptors.response.use( (response) => {
     // do something after response is sent
-    console.log('Middleware triggered after response');
+    logger.info(`Sending response ... \n ${response}`);
     return response;
 }, function(error){
     return Promise.reject(error);
