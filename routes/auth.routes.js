@@ -14,8 +14,10 @@ router.post('/register', async (req, res) => {
 
     try {
         const oid = generateUniqueId();
+        user = await User.create({...req.body, oid, walletId: "no wallet" })
         const walletResponse = await Emtech.createWallet(oid)
-        user = await User.create({...req.body, oid, walletId: walletResponse.id })
+        user.walletId = walletResponse.id
+        user.save()
     } catch (error) {
         console.error(error.message)
         return res.status(500).json({ error: error.message });
