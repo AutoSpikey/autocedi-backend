@@ -6,9 +6,9 @@ const Automation = require('../models/automation.model');
 router.post('/', async (req, res) => {
     try {
         const automation = await Automation.create(req.body);
-        res.json(automation);
+        return res.json(automation);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 });
 
@@ -16,9 +16,9 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const automations = await Automation.find();
-        res.json(automations);
+        return res.json(automations);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 });
 
@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
         
         return res.json(automation);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+       return  res.status(500).json({ error: error.message });
     }
 });
 
@@ -41,12 +41,11 @@ router.delete('/:id', async (req, res) => {
         const automation = await Automation.findByIdAndDelete(req.params.id);
 
         if (!automation) {
-            res.status(404).send({ message: 'Automation not found' });
-            return;
+            return res.status(404).send({ message: 'Automation not found' });
         }
-        res.status(200).send({ message: 'Automation deleted successfully' });
+        return res.status(200).send({ message: 'Automation deleted successfully' });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 });
 

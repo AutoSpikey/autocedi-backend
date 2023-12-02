@@ -28,7 +28,10 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
+        console.log("looking for user with email", req.body.email)
         const user = await User.findOne({ email: req.body.email });
+
+        console.log("found user", obfuscate(user.toObject()))
 
         // Check if the user exists
         if (!user) {
@@ -47,17 +50,14 @@ router.post('/login', async (req, res) => {
             );
 
             // Send the token in the response
-            res.json({ token });
+            return res.json({ token });
         } else {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 
-    return res.json({
-        "message": "not implemented yet"
-    }, 200)
 });
 
 
