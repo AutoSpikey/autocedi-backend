@@ -15,6 +15,7 @@ const auth = async (req, res, next) => {
         // validate token
         try {
             const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
+            await User.findOne({_id: payload.userId});
             req.user = {
                 id: payload.userId,
                 email: payload.email,
@@ -25,7 +26,7 @@ const auth = async (req, res, next) => {
             next()
         } catch (error) {
             logger.error(error);
-            res.status(StatusCodes.UNAUTHORIZED).json({ message: "Authentication Invalid" });
+            res.status(401).json({ message: "Authentication Invalid" });
         }
     }
 
