@@ -8,6 +8,7 @@ const walletRoutes = require("./routes/wallet.routes");
 const validateRoutes = require("./routes/validate.routes");
 const rateLimit = require("express-rate-limit");
 const logger = require("./logger");
+const authMiddleware = require("./middleware/authorization");
 
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
@@ -16,6 +17,7 @@ const limiter = rateLimit({
 
 const cors = require("cors");
 const axiosMiddleware = require("./middleware/axios");
+const auth = require("./middleware/authorization");
 
 const app = express();
 
@@ -30,6 +32,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
+app.use(axiosMiddleware);
 app.use(cors());
 app.use(limiter);
 
@@ -38,8 +41,8 @@ app.get("/", (req, res) => {
 });
 
 // Use the automation routes
-app.use("/automations", automationRoutes);
-app.use("/wallets", walletRoutes);
+app.use("/automations", automationRoutes, authMiddleware);
+app.use("/wallets", walletRoutes, authMiddleware);
 app.use("/callback", callbackRoutes);
 app.use("/login", loginRoutes);
 app.use("/register", registerRoutes);
