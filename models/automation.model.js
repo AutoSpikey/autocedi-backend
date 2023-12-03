@@ -7,10 +7,7 @@ const automationSchema = new Schema({
         unique: true,
     },
     userId: String,
-    label: {
-        type: String,
-        unique: true 
-    },
+    label: String,
     trigger: {
         field: {
             type: String,
