@@ -11,7 +11,7 @@ const walletSchema = new Schema({
     level: String,
     owner: String,
     status: String,
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    userId: String,
 }, { versionKey: false });
 
 const Wallet = mongoose.model('Wallet', walletSchema);

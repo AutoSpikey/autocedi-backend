@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
         // If passwords match, generate a JWT token
         if (passwordMatch) {
             const token = jwt.sign(
-                { userId: user._id, ip: req.socket.remoteAddress },
+                { userId: user.oid, ip: req.socket.remoteAddress },
                 process.env.JWT_SECRET_KEY,
                 { expiresIn: '5m' } // Token expires in 5 minutes
             );

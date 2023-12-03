@@ -6,6 +6,7 @@ const automationSchema = new Schema({
         type: String, 
         unique: true,
     },
+    userId: String,
     label: {
         type: String,
         unique: true 
