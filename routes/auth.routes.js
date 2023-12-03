@@ -31,18 +31,20 @@ router.post('/login', async (req, res) => {
         console.log("looking for user with email", req.body.email)
         const user = await User.findOne({ email: req.body.email });
 
-        console.log("found user", obfuscate(user.toObject()))
-
         // Check if the user exists
         if (!user) {
+            console.log("user not found", req.body.email)
             return res.status(401).json({ error: 'Invalid email or password' });
         }
+
+        console.log("found user", obfuscate(user.toObject()))
 
         // Compare the entered password with the hashed password stored in the database
         const passwordMatch = await bcrypt.compare(req.body.password, user.password);
 
         // If passwords match, generate a JWT token
         if (passwordMatch) {
+            console.log("password matches, signing token")
             const token = jwt.sign(
                 { userId: user.oid, ip: req.socket.remoteAddress },
                 process.env.JWT_SECRET_KEY,
@@ -52,6 +54,7 @@ router.post('/login', async (req, res) => {
             // Send the token in the response
             return res.json({ token });
         } else {
+            console.log(`password entered for user ${user.email} doesn't match`)
             return res.status(401).json({ error: 'Invalid email or password' });
         }
     } catch (error) {
