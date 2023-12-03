@@ -18,9 +18,11 @@ const automationSchema = new Schema({
             enum: ['time','receive'],
             required: true,
         },
-        value: {
+        amount: {
+            type: Number,
+        },
+        cron: {
             type: String,
-            required: true,
         },
     },
     conditions: [
@@ -41,21 +43,9 @@ const automationSchema = new Schema({
     ],
     actions: [
         {
-            type: {
-                type: String,
-                required: true,
-            },
-            value: {
-                type: Number,
-            },
-            destination: {
-                accountType: {
-                    type: String,
-                },
-                accountInfo: {
-                    type: String,
-                },
-            },
+            field: String,
+            value: Number,
+            destination: String,
         },
     ],
     history:[

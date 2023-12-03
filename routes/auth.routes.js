@@ -48,7 +48,7 @@ router.post('/login', async (req, res) => {
             const token = jwt.sign(
                 { userId: user.oid, ip: req.socket.remoteAddress },
                 process.env.JWT_SECRET_KEY,
-                { expiresIn: '5m' } // Token expires in 5 minutes
+                { expiresIn: '1h' } // Token expires in 1 hour
             );
 
             // Send the token in the response

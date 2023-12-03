@@ -6,10 +6,12 @@ const Automation = require('../models/automation.model');
 router.post('/', async (req, res) => {
     try {
         const newAutomation = { ...req.body, userId: req.auth.userId }
+        console.log(JSON.stringify(newAutomation, null, 2));
         const automation = await Automation.create(newAutomation);
         return res.json(automation);
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        console.log(error.message)
+        return res.status(500).json({ error: "failed to create automation" });
     }
 });
 
