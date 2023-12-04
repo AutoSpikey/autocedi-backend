@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Automation = require('../models/automation.model');
+const { generateUniqueId } = require('../lib/generator');
 
 // Create
 router.post('/', async (req, res) => {
     try {
-        const newAutomation = { ...req.body, userId: req.auth.userId }
+        const newAutomation = { ...req.body, userId: req.auth.userId, oid: generateUniqueId() }
         console.log(JSON.stringify(newAutomation, null, 2));
         const automation = await Automation.create(newAutomation);
         return res.json(automation);
