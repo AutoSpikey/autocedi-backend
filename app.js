@@ -3,7 +3,6 @@ const automationRoutes = require('./routes/automation.routes');
 const callbackRoutes = require('./routes/callback.routes');
 const authRoutes = require('./routes/auth.routes');
 const selfRoutes = require('./routes/self.routes');
-const walletRoutes = require('./routes/wallet.routes');
 const validateRoutes = require('./routes/validate.routes');
 const cors = require('cors');
 const { authenticateToken } = require('./lib/security');
@@ -21,7 +20,6 @@ app.get('/', (req, res) => {
 
 // Use the automation routes
 app.use('/automations', automationRoutes);
-app.use('/wallets', walletRoutes);
 app.use('/callback', callbackRoutes);
 app.use('/auth', authRoutes);
 app.use('/validate', validateRoutes);
