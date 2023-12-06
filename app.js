@@ -8,7 +8,6 @@ const walletRoutes = require("./routes/wallet.routes");
 const validateRoutes = require("./routes/validate.routes");
 const rateLimit = require("express-rate-limit");
 const logger = require("./logger");
-const authMiddleware = require("./middleware/authorization");
 
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
@@ -22,12 +21,27 @@ const app = express();
 app.use(express.json());
 // app.use(audit())
 app.use(function (req, res, next) {
-  console.log(`Incoming Request...\n ${JSON.stringify(req.body)} \n url:${JSON.stringify(req.url)}`);
+  if (req.url == '/register' | 'login'){
+    let body = {...req.body};
+    delete body.password;
+    console.log(`Incoming Request...\n ${JSON.stringify(body)} \n url:${JSON.stringify(req.url)}`);
+  } 
+  else{
+    logger.info(`Incoming Request...\n ${JSON.stringify(req.body)} \n url:${JSON.stringify(req.url)}`);
+  }
   res.header("Access-Control-Allow-Origin", "localhost"); // update to match the domain you will make the request from
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
+  const originalJson = res.json;
+
+  // Override res.json to log before sending the response
+  res.json = function (data) {
+    logger.info(`Response sent...: \n${JSON.stringify(data)}`);
+    originalJson.call(this, data); // Call the original res.json function
+  };
+
   next();
 });
 app.use(cors());
