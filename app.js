@@ -16,15 +16,13 @@ const limiter = rateLimit({
 });
 
 const cors = require("cors");
-const axiosMiddleware = require("./middleware/axios");
-const auth = require("./middleware/authorization");
 
 const app = express();
 
 app.use(express.json());
 // app.use(audit())
 app.use(function (req, res, next) {
-  logger.info(req.body);
+  console.log(`Incoming Request...\n ${JSON.stringify(req.body)} \n url:${JSON.stringify(req.url)}`);
   res.header("Access-Control-Allow-Origin", "localhost"); // update to match the domain you will make the request from
   res.header(
     "Access-Control-Allow-Headers",
@@ -32,7 +30,6 @@ app.use(function (req, res, next) {
   );
   next();
 });
-app.use(axiosMiddleware);
 app.use(cors());
 app.use(limiter);
 
@@ -41,8 +38,8 @@ app.get("/", (req, res) => {
 });
 
 // Use the automation routes
-app.use("/automations", automationRoutes, authMiddleware);
-app.use("/wallets", walletRoutes, authMiddleware);
+app.use("/automations", automationRoutes);
+app.use("/wallets", walletRoutes);
 app.use("/callback", callbackRoutes);
 app.use("/login", loginRoutes);
 app.use("/register", registerRoutes);
