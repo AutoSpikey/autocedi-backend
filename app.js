@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
   if (req.url == '/register' | 'login'){
     let body = {...req.body};
     delete body.password;
-    console.log(`Incoming Request...\n ${JSON.stringify(body)} \n url:${JSON.stringify(req.url)}`);
+    logger.info(`Incoming Request...\n ${JSON.stringify(body)} \n url:${JSON.stringify(req.url)}`);
   } 
   else{
     logger.info(`Incoming Request...\n ${JSON.stringify(req.body)} \n url:${JSON.stringify(req.url)}`);
