@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const automationSchema = new Schema({
-    label: {
-        type: String,
-        unique: true 
+    oid: {
+        type: String, 
+        unique: true,
     },
+    userId: String,
+    label: String,
     trigger: {
         field: {
             type: String,
@@ -16,9 +18,11 @@ const automationSchema = new Schema({
             enum: ['time','receive'],
             required: true,
         },
-        value: {
+        amount: {
+            type: Number,
+        },
+        cron: {
             type: String,
-            required: true,
         },
     },
     conditions: [
@@ -39,21 +43,9 @@ const automationSchema = new Schema({
     ],
     actions: [
         {
-            type: {
-                type: String,
-                required: true,
-            },
-            value: {
-                type: Number,
-            },
-            destination: {
-                accountType: {
-                    type: String,
-                },
-                accountInfo: {
-                    type: String,
-                },
-            },
+            field: String,
+            value: Number,
+            destination: String,
         },
     ],
     history:[

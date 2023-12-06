@@ -1,14 +1,20 @@
 const axios = require('axios');
-
 const endpointURL = 'https://autocedi-backend.onrender.com';
 
-setInterval(() => {
+function ping(){
   axios.get(endpointURL)
-    .then(response => {
-      console.log('Response status:', response.status);
-      console.log('Response data:', response.data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}, 30000);
+  .then(() => {
+    if(!up) {
+      console.log("server up");
+      up = true;
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    up = false
+  });
+}
+
+let up = false;
+ping()
+setInterval(ping, 30000);

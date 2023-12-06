@@ -1,11 +1,13 @@
-const express = require("express");
+const express = require('express');
 
-const automationRoutes = require("./routes/automation.routes");
-const callbackRoutes = require("./routes/callback.routes");
-const loginRoutes = require("./routes/login.routes");
-const registerRoutes = require("./routes/register.routes");
-const walletRoutes = require("./routes/wallet.routes");
-const validateRoutes = require("./routes/validate.routes");
+const automationRoutes = require('./routes/automation.routes');
+const callbackRoutes = require('./routes/callback.routes');
+const authRoutes = require('./routes/auth.routes');
+const selfRoutes = require('./routes/self.routes');
+const loginRoutes = require('./routes/login.routes');
+const registerRoutes = require('./routes/register.routes');
+const walletRoutes = require('./routes/wallet.routes');
+const validateRoutes = require('./routes/validate.routes');
 const rateLimit = require("express-rate-limit");
 const logger = require("./logger");
 
@@ -14,7 +16,8 @@ const limiter = rateLimit({
   max: 100, // Limit each IP to 100 requests per window
 });
 
-const cors = require("cors");
+const cors = require('cors')
+const { authenticateToken } = require('./lib/security');
 
 const app = express();
 
@@ -47,16 +50,18 @@ app.use(function (req, res, next) {
 app.use(cors());
 app.use(limiter);
 
-app.get("/", (req, res) => {
-  res.send("Welcome to the autocedi backend");
+app.use(express.json());
+app.use(authenticateToken)
+
+app.get('/', (req, res) => {
+    return res.send('Welcome to the autocedi backend');
 });
 
 // Use the automation routes
-app.use("/automations", automationRoutes);
-app.use("/wallets", walletRoutes);
-app.use("/callback", callbackRoutes);
-app.use("/login", loginRoutes);
-app.use("/register", registerRoutes);
-app.use("/validate", validateRoutes);
+app.use('/automations', automationRoutes);
+app.use('/callback', callbackRoutes);
+app.use('/auth', authRoutes);
+app.use('/validate', validateRoutes);
+app.use('/self', selfRoutes);
 
 module.exports = app;
