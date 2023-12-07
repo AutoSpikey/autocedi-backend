@@ -2,11 +2,8 @@ const express = require('express');
 
 const automationRoutes = require('./routes/automation.routes');
 const callbackRoutes = require('./routes/callback.routes');
-const authRoutes = require('./routes/auth.routes');
 const selfRoutes = require('./routes/self.routes');
-const loginRoutes = require('./routes/login.routes');
-const registerRoutes = require('./routes/register.routes');
-const walletRoutes = require('./routes/wallet.routes');
+const authRoutes = require('./routes/auth.routes');
 const validateRoutes = require('./routes/validate.routes');
 const rateLimit = require("express-rate-limit");
 const logger = require("./logger");
