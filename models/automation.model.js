@@ -56,6 +56,7 @@ const automationSchema = new Schema({
             logs: String
         }
     ],
+    lastTransactionHash: String,
     lastRan: String
 }, { timestamps: true, versionKey: false });
 
