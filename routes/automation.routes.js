@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
     try {
         const automation = await Automation.findOne({ oid: req.params.id });
 
-        if (!automation) return res.status(404).json({ message: `automation with id ${id} not found` });
+        if (!automation) return res.status(404).json({ message: `automation with oid ${oid} not found` });
         if (automation.userId !== req.auth.userId) return res.status(403);
 
         return res.json(automation);
