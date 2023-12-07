@@ -1,8 +1,11 @@
 #!node
 
-const command = process.argv[2]
 const emtech = require("./lib/emtech")
 require("dotenv").config()
+const db = require("./lib/db");
+const { executeAll, processAutomationById } = require("./lib/processor");
+
+const command = process.argv[2]
 
 async function main(){
     switch (command) {
@@ -14,9 +17,44 @@ async function main(){
             const response = await emtech.loadWallet(walletId, amount).catch(err => console.error(`${err.response.status} ${err.response.statusText} ${err.response.data}`))
             console.log("response", response)
             break;
+        case "run":
+            await run()
+            break;
+        case "exec":
+            const autoId = process.argv[3]
+            await runAutomationById(autoId)
+            break;
         default:
             console.log("v0.0.0")
     }
+}
+
+async function run() {
+    console.log("trying to connect to mongo")
+    await db.connect().then(() => {
+        console.log("connected to mongo")
+    }).catch(err => {
+        console.error('Error connecting to MongoDB:', err.message);
+    });
+
+    console.log("executing all automations")
+    await executeAll()
+    // emtech.transfer(source, destination, amount)
+    process.exit(0)
+}
+
+async function runAutomationById(id) {
+    console.log("trying to connect to mongo")
+    await db.connect().then(() => {
+        console.log("connected to mongo")
+    }).catch(err => {
+        console.error('Error connecting to MongoDB:', err.message);
+    });
+
+    console.log("executing all automations")
+    await processAutomationById(id)
+
+    process.exit(0)
 }
 
 main();
