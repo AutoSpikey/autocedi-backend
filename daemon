@@ -1,0 +1,19 @@
+#! node
+
+require('dotenv').config()
+
+const cron = require('node-cron');
+const db = require("./lib/db");
+const { processTimeAutos, processEventAutos } = require('./lib/processor');
+
+async function run() {
+  await db.connect().catch(err => {
+    console.error('Error connecting to MongoDB:', err.message);
+  });
+
+  processTimeAutos()
+  cron.schedule("* * * * *", processEventAutos)
+
+}
+
+run()
