@@ -4,6 +4,7 @@ const automationRoutes = require('./routes/automation.routes');
 const callbackRoutes = require('./routes/callback.routes');
 const selfRoutes = require('./routes/self.routes');
 const authRoutes = require('./routes/auth.routes');
+const userwalletsRoutes = require('./routes/userwallets.routes');
 const validateRoutes = require('./routes/validate.routes');
 const rateLimit = require("express-rate-limit");
 const logger = require("./logger");
@@ -60,5 +61,6 @@ app.use('/callback', callbackRoutes);
 app.use('/auth', authRoutes);
 app.use('/validate', validateRoutes);
 app.use('/self', selfRoutes);
+app.use('/userwallets', userwalletsRoutes);
 
 module.exports = app;
