@@ -3,7 +3,7 @@
 const emtech = require("./lib/emtech")
 require("dotenv").config()
 const db = require("./lib/db");
-const { executeAll, processAutomationById } = require("./lib/processor");
+const { executeAll, processAutomationById, executeEventAutomationById, processAuto } = require("./lib/processor");
 
 const command = process.argv[2]
 
@@ -23,6 +23,9 @@ async function main(){
         case "exec":
             const autoId = process.argv[3]
             await runAutomationById(autoId)
+            break;
+        case "event":
+            await eventAutomation(process.argv[3])
             break;
         default:
             console.log("v0.0.0")
@@ -53,6 +56,20 @@ async function runAutomationById(id) {
 
     console.log("executing all automations")
     await processAutomationById(id)
+
+    process.exit(0)
+}
+
+async function eventAutomation(id){
+    console.log("trying to connect to mongo")
+    await db.connect().then(() => {
+        console.log("connected to mongo")
+    }).catch(err => {
+        console.error('Error connecting to MongoDB:', err.message);
+    });
+
+    console.log("executing all automations")
+    await executeEventAutomationById(id)
 
     process.exit(0)
 }
