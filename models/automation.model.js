@@ -7,6 +7,7 @@ const automationSchema = new Schema({
         unique: true,
     },
     userId: String,
+    walletId: String,
     label: String,
     trigger: {
         field: {

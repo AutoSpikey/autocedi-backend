@@ -2,11 +2,14 @@ const express = require('express');
 const router = express.Router();
 const Automation = require('../models/automation.model');
 const { generateUniqueId } = require('../lib/generator');
+const User = require('../models/user.model');
 
 // Create
 router.post('/', async (req, res) => {
     try {
-        const newAutomation = { ...req.body, userId: req.auth.userId, oid: generateUniqueId() }
+        const user = await User.findOne({oid: req.auth.userId})
+
+        const newAutomation = { ...req.body, userId: req.auth.userId, oid: generateUniqueId(), walletId: user.walletId }
         console.log(JSON.stringify(newAutomation, null, 2));
         const automation = await Automation.create(newAutomation);
         return res.json(automation);
