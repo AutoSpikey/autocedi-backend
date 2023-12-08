@@ -54,7 +54,7 @@ async function runAutomationById(id) {
         console.error('Error connecting to MongoDB:', err.message);
     });
 
-    console.log("executing all automations")
+    console.log("executing automations", id)
     await processAutomationById(id)
 
     process.exit(0)
